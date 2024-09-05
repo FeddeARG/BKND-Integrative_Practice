@@ -13,12 +13,12 @@ import __dirname from './utils/utils.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Conectar a MongoDB
+// MongoDB env
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Conectado a MongoDB'))
     .catch(error => console.error('Error de conexión a MongoDB:', error));
 
-// Configuración de Handlebars
+// Cfg de Handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');

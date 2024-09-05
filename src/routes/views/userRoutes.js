@@ -4,7 +4,7 @@ import { logout } from '../../controllers/authController.js';
 
 const router = express.Router();
 
-// Middleware para verificar si el usuario está autenticado
+// Middleware verify is autenticated
 const isAuthenticated = (req, res, next) => {
     const token = req.signedCookies.currentUser;
     if (!token) {
@@ -20,27 +20,27 @@ const isAuthenticated = (req, res, next) => {
     }
 };
 
-// Middleware para verificar si el usuario NO está autenticado
+// Middleware verify not autenticated
 const isNotAuthenticated = (req, res, next) => {
     const token = req.signedCookies.currentUser;
     if (token) return res.redirect('/users/current');
     next();
 };
 
-// Ruta para servir el formulario de login (GET)
+// Ruta Login
 router.get('/login', isNotAuthenticated, (req, res) => {
     res.render('login');
 });
 
-// Ruta para servir el formulario de registro (GET)
+// Ruta Register
 router.get('/register', isNotAuthenticated, (req, res) => {
-    res.render('register');  // Renderiza la vista de registro
+    res.render('register');
 });
 
-// Ruta para logout (GET)
+// Ruta Logout
 router.get('/logout', isAuthenticated, logout);
 
-// Ruta para mostrar la página actual del usuario (GET /users/current)
+// Ruta Current
 router.get('/current', isAuthenticated, (req, res) => {
     const { first_name, last_name, email, role } = req.user;
     res.render('current', { first_name, last_name, email, role });
